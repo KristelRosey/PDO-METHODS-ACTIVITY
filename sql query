@@ -1,0 +1,363 @@
+SQL QUERY FOR CREATING THE TABLES
+
+CREATE TABLE CUSTOMER_INFO(
+    CUSTOMER_ID INT AUTO_INCREMENT PRIMARY KEY,
+    FNAME VARCHAR(50),
+    LNAME VARCHAR(50),
+    BDATE DATE,
+    CONTACT_NUM BIGINT,
+    EMAIL VARCHAR(255),
+	USER VARCHAR(99),
+    PASS VARCHAR(15)
+); CREATE TABLE RESERVATION(
+    RESERVATION_NUM INT AUTO_INCREMENT PRIMARY KEY,
+    CUSTOMER_REF_NUM INT,
+    CUSTOMER_NAME VARCHAR(100),
+    NUM_OF_OCCUPANT INT,
+    ROOM_TYPE VARCHAR(50),
+    PET BOOLEAN,
+    PAYMENT_STATUS VARCHAR(10),
+    TIME_IN DATETIME,
+    TIME_OUT DATETIME,
+    ROOM_ID INT
+); CREATE TABLE ROOMS(
+    ROOM_ID INT AUTO_INCREMENT PRIMARY KEY,
+    ROOM_TYPE VARCHAR(50),
+    STATUS VARCHAR
+        (10),
+        OUT_TIME DATETIME,
+        CUSTOMER_REF_NUM INT,
+        OCCUPANT_NAME VARCHAR(50),
+        RESERVATION_NUM INT
+);
+CREATE TABLE AMENITIES(
+    RESERVATION_NUM INT PRIMARY KEY,
+    CUSTOMER_REF_NUM INT,
+    ROOM_ID INT,
+    CUSTOMER_NAME VARCHAR(100),
+    POOL BOOLEAN,
+    PET BOOLEAN,
+    SNACK_BAR BOOLEAN,
+    ARCADE BOOLEAN,
+    SPA BOOLEAN
+); CREATE TABLE PAYMENT(
+    RESERVATION_NUM INT PRIMARY KEY,
+    PAYMENT_STATUS VARCHAR(10),
+    CUSTOMER_NAME VARCHAR(100),
+    ADDITIONAL_FEE INT DEFAULT 0,
+    MODE_OF_PAYMENT VARCHAR(10)
+);
+
+==============================================================================================================================
+SQL QUERY FOR INSERTING RECORDS IN A TABLE
+
+INSERT INTO CUSTOMER_INFO(
+    FNAME,
+    LNAME,
+    BDATE,
+    CONTACT_NUM,
+    EMAIL
+)
+VALUES(
+    'John',
+    'Doe',
+    '1985-05-15',
+    1234567890,
+    'john.doe@email.com'
+),(
+    'Jane',
+    'Smith',
+    '1990-03-22',
+    9876543210,
+    'jane.smith@email.com'
+),(
+    'Tom',
+    'Johnson',
+    '1978-11-10',
+    5554443333,
+    'tom.johnson@email.com'
+),(
+    'Mary',
+    'Brown',
+    '1982-07-07',
+    6667778888,
+    'mary.brown@email.com'
+),(
+    'Alice',
+    'Williams',
+    '1992-12-25',
+    4445556666,
+    'alice.williams@email.com'
+),(
+    'Bob',
+    'Jones',
+    '1989-09-09',
+    7778889999,
+    'bob.jones@email.com'
+);
+INSERT INTO RESERVATION(
+    CUSTOMER_REF_NUM,
+    CUSTOMER_NAME,
+    NUM_OF_OCCUPANT,
+    ROOM_TYPE,
+    PET,
+    PAYMENT_STATUS,
+    TIME_IN,
+    TIME_OUT,
+    ROOM_ID
+)
+VALUES(
+    1,
+    'John Doe',
+    1,
+    'Single',
+    FALSE,
+    'Prepaid',
+    '2024-09-10 14:00:00',
+    '2024-09-12 12:00:00',
+    1
+),(
+    2,
+    'Jane Smith',
+    2,
+    'Single',
+    TRUE,
+    'Prepaid',
+    '2024-09-11 13:00:00',
+    '2024-09-13 14:00:00',
+    2
+),(
+    3,
+    'Tom Johnson',
+    3,
+    'Double',
+    FALSE,
+    'Postpaid',
+    '2024-09-12 10:00:00',
+    '2024-09-14 11:00:00',
+    4
+),(
+    4,
+    'Mary Brown',
+    1,
+    'Suite',
+    FALSE,
+    'Prepaid',
+    '2024-09-11 16:00:00',
+    '2024-09-12 09:00:00',
+    7
+),(
+    5,
+    'Alice Williams',
+    2,
+    'Suite',
+    TRUE,
+    'Postpaid',
+    '2024-09-13 12:00:00',
+    '2024-09-15 16:00:00',
+    8
+),(
+    6,
+    'Bob Jones',
+    4,
+    'Penthouse',
+    TRUE,
+    'Prepaid',
+    '2024-09-14 15:00:00',
+    '2024-09-16 12:00:00',
+    10
+);
+INSERT INTO ROOMS(
+    ROOM_TYPE,
+STATUS
+    ,
+    OUT_TIME,
+    CUSTOMER_REF_NUM,
+    OCCUPANT_NAME,
+    RESERVATION_NUM
+)
+VALUES(
+    'Single',
+    'Occupied',
+    '2024-09-12 12:00:00',
+    1,
+    'John Doe',
+    1
+),(
+    'Single',
+    'Occupied',
+    '2024-09-13 14:00:00',
+    2,
+    'Jane Smith',
+    2
+),(
+    'Single',
+    'Vacant',
+    '2024-09-13 14:00:00',
+    0,
+    '',
+    0
+),(
+    'Double',
+    'Occupied',
+    '2024-09-14 11:00:00',
+    3,
+    'Tom Johnson',
+    3
+),(
+    'Double',
+    'Vacant',
+    '2024-09-14 11:00:00',
+    0,
+    '',
+    0
+),(
+    'Double',
+    'Vacant',
+    '2024-09-14 11:00:00',
+    0,
+    '',
+    0
+),(
+    'Suite',
+    'Occupied',
+    '2024-09-12 09:00:00',
+    4,
+    'Mary Brown',
+    4
+),(
+    'Suite',
+    'Occupied',
+    '2024-09-15 16:00:00',
+    5,
+    'Alice Williams',
+    5
+),(
+    'Suite',
+    'Vacant',
+    '2024-09-15 16:00:00',
+    0,
+    '',
+    0
+),(
+    'Penthouse',
+    'Occupied',
+    '2024-09-16 12:00:00',
+    6,
+    'Bob Jones',
+    6
+),(
+    'Penthouse',
+    'Vacant',
+    '2024-09-16 12:00:00',
+    0,
+    '',
+    0
+),(
+    'Penthouse',
+    'Vacant',
+    '2024-09-16 12:00:00',
+    0,
+    '',
+    0
+);
+INSERT INTO AMENITIES(
+    RESERVATION_NUM,
+    CUSTOMER_REF_NUM,
+    ROOM_ID,
+    CUSTOMER_NAME,
+    POOL,
+    PET,
+    SNACK_BAR,
+    ARCADE,
+    SPA
+)
+VALUES(1, 1, 1, 'John Doe', TRUE, FALSE, TRUE, FALSE, TRUE),(
+    2,
+    2,
+    2,
+    'Jane Smith',
+    TRUE,
+    TRUE,
+    TRUE,
+    FALSE,
+    FALSE
+),(
+    3,
+    3,
+    4,
+    'Tom Johnson',
+    FALSE,
+    FALSE,
+    TRUE,
+    TRUE,
+    FALSE
+),(
+    4,
+    4,
+    7,
+    'Mary Brown',
+    TRUE,
+    FALSE,
+    FALSE,
+    FALSE,
+    TRUE
+),(
+    5,
+    5,
+    8,
+    'Alice Williams',
+    TRUE,
+    TRUE,
+    TRUE,
+    TRUE,
+    TRUE
+),(
+    6,
+    6,
+    10,
+    'Bob Jones',
+    FALSE,
+    TRUE,
+    TRUE,
+    FALSE,
+    TRUE
+);
+INSERT INTO PAYMENT(
+    RESERVATION_NUM,
+    PAYMENT_STATUS,
+    CUSTOMER_NAME,
+    ADDITIONAL_FEE,
+    MODE_OF_PAYMENT
+)
+VALUES(
+    1,
+    'Prepaid',
+    'John Doe',
+    0,
+    'Credit'
+),(
+    2,
+    'Prepaid',
+    'Jane Smith',
+    0,
+    'Cash'
+),(
+    3,
+    'Postpaid',
+    'Tom Johnson',
+    0,
+    'Credit'
+),(
+    4,
+    'Prepaid',
+    'Mary Brown',
+    0,
+    'Cash'
+),(
+    5,
+    'Postpaid',
+    'Alice Williams',
+    0,
+    'Credit'
+),(6, 'Prepaid', 'Bob Jones', 0, 'Cash');
